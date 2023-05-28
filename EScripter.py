@@ -111,22 +111,22 @@ def filter(wb, path):
                     selection = ws[1][int(user_input) - 1]
                     print(selection)
                     condition = str(input("Enter filter value: "))
-                    new_worksheet = str(input("Enter a name for your new worksheet: "))
+                    worksheet = str(input("Enter a name for your new worksheet: "))
                     
-                    wb.create_sheet(new_worksheet)
-                    ws2 = wb[new_worksheet]
+                    if worksheet not in wb.sheetnames:
+                        wb.create_sheet(worksheet)
+                        ws2 = wb[worksheet]
+                    else:
+                        ws2 = wb[worksheet]
                     
                     #copy_header(wb, ws, ws2)
                     
                     print("*----Worksheet Created----*")
-                    
                     for row in ws.iter_rows():
-                        if row[int(user_input) - 1].value == condition:
+                        if str(row[int(user_input) - 1].value) == condition:
                             ws2.append((cell.value for cell in row))                         
-                    
                     wb.save(path)
-                    print("*----Workbook Saved----*")
-                    print("")
+                    print("*----Workbook Saved----*\n")
                     
                     return
                 #elif for String input needed
@@ -139,7 +139,6 @@ def filter(wb, path):
 # def copy_header(workbook, src, dst):
     
 #     num = 
-
 
 def get_file():
     
